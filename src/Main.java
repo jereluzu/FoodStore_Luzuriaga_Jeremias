@@ -27,9 +27,9 @@ public class Main {
 
         while (opcion != 0) {
             System.out.println("\n--- MENÚ PRINCIPAL ---");
-            System.out.println("1. Gestión de Categorías (Épica 1)");
-            System.out.println("2. Gestión de Productos (Épica 2)");
-            System.out.println("3. Gestión de Usuarios (Épica 3)");
+            System.out.println("1. Gestión de Categorías");
+            System.out.println("2. Gestión de Productos");
+            System.out.println("3. Gestión de Usuarios");
             System.out.println("0. Salir del Sistema");
             System.out.print("Seleccione una opción: ");
 
@@ -55,12 +55,12 @@ public class Main {
                         System.out.println("\nCerrando recursos y saliendo... ¡Éxitos en la entrega!");
                         break;
                     default:
-                        System.out.println("❌ Opción inválida en el Menú Principal.");
+                        System.out.println(" Opción inválida en el Menú Principal.");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("❌ Error: Ingrese un número válido.");
+                System.out.println(" Error: Ingrese un número válido.");
             } catch (Exception e) {
-                System.out.println("❌ Ocurrió un error: " + e.getMessage());
+                System.out.println(" Ocurrió un error: " + e.getMessage());
             }
         }
         ConexionDB.cerrarConexion();
@@ -74,10 +74,10 @@ public class Main {
         int op = -1;
         while (op != 0) {
             System.out.println("\n--- GESTIÓN DE CATEGORÍAS ---");
-            System.out.println("1. Listar Categorías (HU-CAT-01)");
-            System.out.println("2. Crear Categoría (HU-CAT-02)");
-            System.out.println("3. Editar Categoría (HU-CAT-03)");
-            System.out.println("4. Eliminar Categoría (Baja Lógica - HU-CAT-04)");
+            System.out.println("1. Listar Categorías");
+            System.out.println("2. Crear Categoría");
+            System.out.println("3. Editar Categoría");
+            System.out.println("4. Eliminar Categoría");
             System.out.println("0. Volver al Menú Principal");
             System.out.print("Seleccione una opción: ");
 
@@ -117,7 +117,7 @@ public class Main {
                     Categoria catEdit = categoriaService.buscarPorId(idEdit);
 
                     if (catEdit == null) {
-                        System.out.println("❌ El ID no existe o la categoría está eliminada.");
+                        System.out.println(" El ID no existe o la categoría está eliminada.");
                     } else {
                         System.out.print("Nuevo Nombre (" + catEdit.getNombre() + "): ");
                         String nuevoNom = scanner.nextLine().trim();
@@ -139,7 +139,7 @@ public class Main {
                     Categoria catEli = categoriaService.buscarPorId(idEli);
 
                     if (catEli == null) {
-                        System.out.println("❌ La categoría no existe o ya está eliminada.");
+                        System.out.println(" La categoría no existe o ya está eliminada.");
                     } else {
                         System.out.print("¿Está seguro de eliminar lógicamente la categoría '" + catEli.getNombre() + "'? (S/N): ");
                         String confirma = scanner.nextLine().trim().toUpperCase();
@@ -207,7 +207,7 @@ public class Main {
                     Categoria asociada = categoriaService.buscarPorId(idCat);
 
                     if (asociada == null) {
-                        System.out.println("❌ Error: La categoría seleccionada no existe o fue eliminada.");
+                        System.out.println(" Error: La categoría seleccionada no existe o fue eliminada.");
                     } else {
                         Producto nuevo = new Producto(nom, desc, pre, st, asociada);
                         productoService.guardar(nuevo);
@@ -222,7 +222,7 @@ public class Main {
                     Producto prodEdit = productoService.buscarPorId(idEdit);
 
                     if (prodEdit == null) {
-                        System.out.println("❌ El producto no existe o está eliminado.");
+                        System.out.println(" El producto no existe o está eliminado.");
                     } else {
                         System.out.print("Nuevo Nombre (" + prodEdit.getNombre() + "): ");
                         String nuevoNom = scanner.nextLine().trim();
@@ -247,7 +247,7 @@ public class Main {
                     Producto prodEli = productoService.buscarPorId(idEli);
 
                     if (prodEli == null) {
-                        System.out.println("❌ El producto no existe o ya está eliminado.");
+                        System.out.println(" El producto no existe o ya está eliminado.");
                     } else {
                         System.out.print("¿Seguro que quiere eliminar el producto '" + prodEli.getNombre() + "'? (S/N): ");
                         String confirma = scanner.nextLine().trim().toUpperCase();
@@ -318,7 +318,7 @@ public class Main {
                     Usuario userEdit = usuarioService.buscarPorId(idEdit);
 
                     if (userEdit == null) {
-                        System.out.println("❌ El usuario no existe o está eliminado.");
+                        System.out.println(" El usuario no existe o está eliminado.");
                     } else {
                         System.out.print("Nuevo Nombre (" + userEdit.getNombre() + "): ");
                         String nuevoNom = scanner.nextLine().trim();
@@ -334,13 +334,13 @@ public class Main {
                     break;
 
                 case 4:
-                    System.out.println("\n--- ELIMINAR USUARIO (BAJA LÓGICA) ---");
+                    System.out.println("\n--- ELIMINAR USUARIO ---");
                     System.out.print("Ingrese el ID del usuario a eliminar: ");
                     Long idEli = Long.parseLong(scanner.nextLine().trim());
                     Usuario userEli = usuarioService.buscarPorId(idEli);
 
                     if (userEli == null) {
-                        System.out.println("❌ El usuario no existe o ya está eliminado.");
+                        System.out.println(" El usuario no existe o ya está eliminado.");
                     } else {
                         System.out.print("¿Seguro que quiere eliminar a '" + userEli.getNombre() + "'? (S/N): ");
                         String confirma = scanner.nextLine().trim().toUpperCase();
