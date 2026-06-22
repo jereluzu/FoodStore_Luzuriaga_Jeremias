@@ -6,6 +6,7 @@ import integrado.prog2.entities.Pedido;
 import integrado.prog2.entities.Usuario;
 import integrado.prog2.enums.EstadoPedido;
 import integrado.prog2.enums.FormaPago;
+import integrado.prog2.enums.Rol;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -35,17 +36,13 @@ public class PedidoDAO {
             psPedido.executeUpdate();
 
             ResultSet rsKeys = psPedido.getGeneratedKeys();
-            Long pedidoId = null;
             if (rsKeys.next()) {
-                pedidoId = rsKeys.getLong(1);
-                pedido.setId(pedidoId);
-            } else {
-                throw new SQLException("No se pudo obtener el ID del pedido generado.");
+                pedido.setId(rsKeys.getLong(1));
             }
 
             psDetalle = con.prepareStatement(sqlDetalle);
             for (DetallePedido detalle : pedido.getDetalles()) {
-                psDetalle.setLong(1, pedidoId);
+                psDetalle.setLong(1, pedido.getId());
                 psDetalle.setLong(2, detalle.getProducto().getId());
                 psDetalle.setInt(3, detalle.getCantidad());
                 psDetalle.setDouble(4, detalle.getPrecioUnitario());
@@ -55,24 +52,12 @@ public class PedidoDAO {
                 psDetalle.addBatch();
             }
             psDetalle.executeBatch();
-
             con.commit();
-            System.out.println("✅ ¡Pedido y detalles guardados con éxito en la Base de Datos!");
-
         } catch (Exception e) {
-            if (con != null) {
-                try {
-                    con.rollback();
-                    System.out.println("⚠️ Ocurrió un error. Se ejecutó ROLLBACK: la base de datos no se modificó.");
-                } catch (SQLException ex) {
-                    System.out.println("Error al intentar hacer rollback: " + ex.getMessage());
-                }
-            }
+            if (con != null) con.rollback();
             throw e;
         } finally {
-            if (con != null) {
-                con.setAutoCommit(true);
-            }
+            if (con != null) con.setAutoCommit(true);
             if (psPedido != null) psPedido.close();
             if (psDetalle != null) psDetalle.close();
         }
@@ -80,15 +65,16 @@ public class PedidoDAO {
 
     public List<Pedido> listarTodos() throws Exception {
         List<Pedido> lista = new ArrayList<>();
-        String sql = "SELECT p.*, u.nombre as usr_nombre, u.email as usr_email FROM pedidos p " +
-                "INNER JOIN usuarios u ON p.usuario_id = u.id WHERE p.eliminado = false";
+        String sql = "SELECT p.*, u.nombre as usr_nombre, u.email as usr_email " +
+                "FROM pedidos p " +
+                "LEFT JOIN usuarios u ON p.usuario_id = u.id " +
+                "WHERE p.eliminado = 0";
 
         try (Connection con = ConexionDB.getConexion();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                // Instanciamos el usuario básico asociado
                 Usuario usr = new Usuario(
                         rs.getLong("usuario_id"),
                         false,
@@ -96,7 +82,7 @@ public class PedidoDAO {
                         rs.getString("usr_nombre"),
                         rs.getString("usr_email"),
                         "",
-                        integrado.prog2.enums.Rol.USUARIO
+                        Rol.USUARIO
                 );
 
                 Pedido ped = new Pedido(usr, FormaPago.valueOf(rs.getString("forma_pago")));
