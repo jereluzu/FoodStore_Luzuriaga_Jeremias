@@ -133,7 +133,7 @@ public class Main {
                     break;
 
                 case 4:
-                    System.out.println("\n--- ELIMINAR CATEGORÍA (BAJA LÓGICA) ---");
+                    System.out.println("\n--- ELIMINAR CATEGORÍA ---");
                     System.out.print("Ingrese el ID de la categoría a eliminar: ");
                     Long idEli = Long.parseLong(scanner.nextLine().trim());
                     Categoria catEli = categoriaService.buscarPorId(idEli);
@@ -162,10 +162,10 @@ public class Main {
         int op = -1;
         while (op != 0) {
             System.out.println("\n--- GESTIÓN DE PRODUCTOS ---");
-            System.out.println("1. Listar Productos (HU-PROD-01)");
-            System.out.println("2. Crear Producto (HU-PROD-02)");
-            System.out.println("3. Editar Producto (HU-PROD-03)");
-            System.out.println("4. Eliminar Producto (Baja Lógica - HU-PROD-04)");
+            System.out.println("1. Listar Productos");
+            System.out.println("2. Crear Producto");
+            System.out.println("3. Editar Producto");
+            System.out.println("4. Eliminar Producto");
             System.out.println("0. Volver al Menú Principal");
             System.out.print("Seleccione una opción: ");
 
@@ -270,10 +270,10 @@ public class Main {
         int op = -1;
         while (op != 0) {
             System.out.println("\n--- GESTIÓN DE USUARIOS ---");
-            System.out.println("1. Listar Usuarios (HU-USR-01)");
-            System.out.println("2. Registrar Usuario (HU-USR-02)");
-            System.out.println("3. Editar Usuario (HU-USR-03)");
-            System.out.println("4. Eliminar Usuario (Baja Lógica - HU-USR-04)");
+            System.out.println("1. Listar Usuarios");
+            System.out.println("2. Registrar Usuario");
+            System.out.println("3. Editar Usuario");
+            System.out.println("4. Eliminar Usuario");
             System.out.println("0. Volver al Menú Principal");
             System.out.print("Seleccione una opción: ");
 
