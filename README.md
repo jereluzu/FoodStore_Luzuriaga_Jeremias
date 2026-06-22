@@ -22,3 +22,9 @@ Asegurarse de que los datos de conexión en tu clase `ConexionDB.java` coincidan
 ## Ejecución
 1. Abrir el proyecto en IntelliJ IDEA.
 2. Ejecutar la clase `Main.java` ubicada en `src/Main.java`.
+
+## Video
+https://youtu.be/qeobYOMHhbg?si=mMX-gRlGf0DJ-7mb
+
+## PDF
+[Documentacion_Final (1).pdf](https://github.com/user-attachments/files/29202749/Documentacion_Final.1.pdf)
